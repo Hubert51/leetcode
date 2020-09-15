@@ -1,0 +1,53 @@
+# class Solution:
+#     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+#         return self.wordBreakHelper(s, wordDict, True)
+    
+#     def wordBreakHelper(self, s, wordDict, firstFlag=False):
+#         if firstFlag:
+#             if wordDict == []:
+#                 if s == "":
+#                     return True
+#                 else:
+#                     return False
+
+#             set1 = set(s)
+#             set2 = set()
+#             for word in wordDict:
+#                 set2.update(set(word))
+#             print(set1, set2)
+#             if not set1.issubset(set2):
+#                 return False
+        
+#         wordLen = len(sorted(wordDict, key=lambda x: len(x), reverse=True)[0])
+        
+#         if s in wordDict:
+#             return True
+        
+
+#         for j in range(wordLen,0,-1):
+#             if s[0:j] in wordDict:
+#                 if self.wordBreakHelper(s[j:], wordDict):
+#                     return True
+                
+#         return False
+
+
+## check the solution:
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        if s in wordDict:
+            return True
+        
+        dp = [0] * (len(s)+1)
+        # wordDict = set(wordDict)
+        for i in range(len(s)+1):
+            for j in range(0,i):
+                if s[0:j] in wordDict:
+                    dp[j] = True
+                if dp[j] and s[j:i] in wordDict:
+                    dp[i] = True
+                    break
+        print(dp)
+        return dp[-1]
+        
+        
